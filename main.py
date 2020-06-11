@@ -1,3 +1,7 @@
+from myapp.app import Application
+
+
 if __name__ == "__main__":
-    """ execute only if run as a script """ 
+    app = Application()
+    app.display_start_menu()
     pass
