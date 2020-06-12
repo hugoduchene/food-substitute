@@ -2,12 +2,14 @@ import json
 import urllib.request
 
 class ApiManager:
-    """docstring fs ApiManager."""
+    """relation with the Api."""
 
     def __init__(self):
+        "class initialization"
         self.list_product = []
 
     def load_json(self, category):
+        """ Method for loading the json """
         url = "https://fr.openfoodfacts.org/category/"+ category + ".json"
         response = urllib.request.urlopen(url)
         data = json.loads(response.read())
@@ -15,6 +17,7 @@ class ApiManager:
         return data
 
     def get_data(self, category):
+        """ Method for taking the data we need from json """
         data = self.load_json(category)
 
         for dictionary in data["products"]:
