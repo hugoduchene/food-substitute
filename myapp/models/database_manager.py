@@ -37,6 +37,6 @@ class DatabaseManager:
         return list_result
 
     def record_user(self, list_user):
-        request_sql = "INSERT IGNORE INTO user_record (name, product_id) VALUES (%s , %s)"
-        self.mycursor.executemany(request_sql, list_user)
+        request_sql = "INSERT INTO user_record (user_name, id_product) VALUES (%s , %s)"
+        self.mycursor.execute(request_sql, list_user)
         self.mydb.commit()
