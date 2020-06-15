@@ -13,6 +13,7 @@ class Application:
 
     def main(self):
         """ application main class """
+        self.insert_products()
         var = True
 
         while var:
@@ -47,9 +48,16 @@ class Application:
     def insert_products(self):
         """ Method for inserting products into the database. """
         list_categories = self.list_categories
-        for category in list_categories:
-            list_product = self.ApiManager.get_data(category)
+        list_id_categories = self.DatabaseManager
+
+        for id_cat,category in enumerate(list_categories):
+            list_product = self.ApiManager.get_data(category, id_cat + 1)
             self.DatabaseManager.put_products(list_product)
+            tuple_category = (category,)
+            self.DatabaseManager.put_categories(tuple_category)
+
+
+
 
     def display_category(self, user_enter):
         """ Method for displaying categories """
@@ -101,7 +109,7 @@ class Application:
                 (id, nutrient_grade, name, link, description, stores) = substitute
                 print("--------------------------------------------------SUBSTITUTE-----------------------------------------------------\n")
                 print(name + " , " + description + " , " + stores + " , " + link + "\n")
-                record_user_enter = str(input("Tapez sur enter pour voir un autre produit "+ str(numbs) + "/2 OU seléctionnez s si vous souhaitez enregistrer le produit >> \n"))
+                record_user_enter = str(input("Tapez sur enter pour voir un autre produit "+ str(numbs) + "/2 OU seléctionnez s si vous souhaitez enregistrer le produit >> "))
                 self.record_user_product(record_user_enter, id)
 
     def record_user_product(self, record_user_enter, id):

@@ -8,6 +8,7 @@ class ApiManager:
         "class initialization"
         self.list_product = []
 
+
     def load_json(self, category):
         """ Method for loading the json """
         url = "https://fr.openfoodfacts.org/category/"+ category + ".json"
@@ -16,9 +17,10 @@ class ApiManager:
 
         return data
 
-    def get_data(self, category):
+    def get_data(self, category, id_category):
         """ Method for taking the data we need from json """
         data = self.load_json(category)
+
 
         for dictionary in data["products"]:
             product = dictionary.get("product_name_fr","")
@@ -28,7 +30,9 @@ class ApiManager:
             brand = dictionary.get("brands", "")
             link = dictionary.get("url", "")
 
-            tuple_product = (category, product, description, score, stores, brand, link)
+            tuple_product = (id_category, product, description, score, stores, brand, link)
+
 
             self.list_product.append(tuple_product)
+
         return self.list_product

@@ -27,9 +27,11 @@ class DatabaseManager:
         myresult = self.mycursor.fetchall()
         return myresult
 
+
+
     def get_id_products_record(self, id_user):
         """ Method for taking the id of registered products """
-        request_sql = "SELECT id_product FROM product_id WHERE id_user = "+ id_user
+        request_sql = "SELECT id_product FROM favorites WHERE id_user = "+ id_user
         self.mycursor.execute(request_sql)
         myresult = self.mycursor.fetchall()
         return myresult
@@ -43,8 +45,14 @@ class DatabaseManager:
 
     def put_products(self, list_product):
         """ Method for inserting products  """
-        request_sql = "INSERT IGNORE INTO products (category, product_name, ingredients_text, nutrition_grade, stores, brands, link) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        request_sql = "INSERT IGNORE INTO products (id_category, product_name, ingredients_text, nutrition_grade, stores, brands, link) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         self.mycursor.executemany(request_sql, list_product)
+        self.mydb.commit()
+
+    def put_categories(self, list_sub_categories):
+        """ Method for inserting sub categories """
+        request_sql = "INSERT IGNORE INTO categories (category_name) VALUES (%s)"
+        self.mycursor.execute(request_sql, list_sub_categories)
         self.mydb.commit()
 
     def get_better_products(self, category):
@@ -56,7 +64,7 @@ class DatabaseManager:
 
     def record_user(self, list_user):
         """ Method for inserting user records """
-        request_sql = "INSERT INTO product_id (id_user, id_product) VALUES (%s , %s)"
+        request_sql = "INSERT INTO favorites (id_user, id_product) VALUES (%s , %s)"
         self.mycursor.execute(request_sql, list_user)
         self.mydb.commit()
 
@@ -73,7 +81,11 @@ class DatabaseManager:
         request_sql = "SELECT id, pseudo, password FROM user WHERE password = '"+password+"' AND pseudo = '"+pseudo+"'"
         self.mycursor.execute(request_sql)
         tuple_connect = self.mycursor.fetchall()
-        id = tuple_connect[0][0]
+
+        if tuple_connect == []:
+            id = -1
+        else:
+            id = tuple_connect[0][0]
 
         if tuple_connect == [(id, pseudo, password)]:
             var = True
