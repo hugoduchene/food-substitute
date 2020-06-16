@@ -57,7 +57,7 @@ class DatabaseManager:
 
     def get_better_products(self, category):
         """ Method for taking the best products  """
-        request_sql = "SELECT id, nutrition_grade, product_name, link, ingredients_text, stores FROM products WHERE category = '"+category+"' ORDER BY nutrition_grade LIMIT 0,3"
+        request_sql = "SELECT id, nutrition_grade, product_name, link, ingredients_text, stores FROM products WHERE id_category = '"+category+"' ORDER BY nutrition_grade LIMIT 0,3"
         self.mycursor.execute(request_sql)
         list_result = self.mycursor.fetchall()
         return list_result

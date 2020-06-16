@@ -42,8 +42,9 @@ class Application:
                 User_enter_2 = int(input("Sélectionnez votre catégorie >> "))
                 category = self.manage_second_entry(User_enter_2)
 
+
                 User_enter_3 = int(input("Sélectionnez votre produit >> "))
-                self.manage_third_entry(User_enter_3, category)
+                self.manage_third_entry(User_enter_3, str(category+1))
 
     def insert_products(self):
         """ Method for inserting products into the database. """
@@ -94,23 +95,25 @@ class Application:
         list_categories = self.list_categories
         for nbs,categories in enumerate(list_categories):
             if user_enter == nbs:
-                list_tuple_products = self.DatabaseManager.get_products("product_name", "category", categories)
+                list_tuple_products = self.DatabaseManager.get_products("product_name", "id_category", str(nbs+1))
                 for nubs,food in enumerate(list_tuple_products):
                     (nutrient,) = food
                     print(str(nubs) + " : " + nutrient)
-                    category = categories
+                    category = nbs
         return category
 
-    def manage_third_entry(self, user_enter, category):
+    def manage_third_entry(self, user_enter, id_category):
         """ Method for displaying and saving the best products """
-        if user_enter > 0:
-            list_substitute = self.DatabaseManager.get_better_products(category)
-            for numbs, substitute in enumerate(list_substitute):
-                (id, nutrient_grade, name, link, description, stores) = substitute
-                print("--------------------------------------------------SUBSTITUTE-----------------------------------------------------\n")
-                print(name + " , " + description + " , " + stores + " , " + link + "\n")
-                record_user_enter = str(input("Tapez sur enter pour voir un autre produit "+ str(numbs) + "/2 OU seléctionnez s si vous souhaitez enregistrer le produit >> "))
-                self.record_user_product(record_user_enter, id)
+
+
+        list_substitute = self.DatabaseManager.get_better_products(id_category)
+
+        for numbs, substitute in enumerate(list_substitute):
+            (id, nutrient_grade, name, link, description, stores) = substitute
+            print("--------------------------------------------------SUBSTITUTE-----------------------------------------------------\n")
+            print(name + " , " + description + " , " + stores + " , " + link + "\n")
+            record_user_enter = str(input("Tapez sur enter pour voir un autre produit "+ str(numbs) + "/2 OU seléctionnez s si vous souhaitez enregistrer le produit >> "))
+            self.record_user_product(record_user_enter, id)
 
     def record_user_product(self, record_user_enter, id):
         """ Method for registering users' products """
