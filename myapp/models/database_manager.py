@@ -27,8 +27,6 @@ class DatabaseManager:
         myresult = self.mycursor.fetchall()
         return myresult
 
-
-
     def get_id_products_record(self, id_user):
         """ Method for taking the id of registered products """
         request_sql = "SELECT id_product FROM favorites WHERE id_user = "+ id_user

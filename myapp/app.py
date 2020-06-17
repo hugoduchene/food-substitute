@@ -57,9 +57,6 @@ class Application:
             tuple_category = (category,)
             self.DatabaseManager.put_categories(tuple_category)
 
-
-
-
     def display_category(self, user_enter):
         """ Method for displaying categories """
         if user_enter == 1:
@@ -87,9 +84,6 @@ class Application:
                     var_bool_products_user = True
         return var_bool_products_user
 
-
-
-
     def manage_second_entry(self, user_enter):
         """ Method for displaying the products of the chosen category """
         list_categories = self.list_categories
@@ -104,8 +98,6 @@ class Application:
 
     def manage_third_entry(self, user_enter, id_category):
         """ Method for displaying and saving the best products """
-
-
         list_substitute = self.DatabaseManager.get_better_products(id_category)
 
         for numbs, substitute in enumerate(list_substitute):
@@ -133,7 +125,6 @@ class Application:
             bool_regi = False
         return bool_regi
 
-
     def log(self, user_enter):
         """ Method for logging in a user """
         var_bool = True
@@ -143,9 +134,8 @@ class Application:
             (var_bool_connect ,id) = self.DatabaseManager.connect_user(pseudo, password)
             self.id_user = str(id)
 
-
-            if var_bool_connect == True:
+        if var_bool_connect == True:
                 var_bool = False
-            else:
+        else:
                 var_bool = True
         return var_bool
