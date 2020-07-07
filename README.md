@@ -1,5 +1,5 @@
 # food-substitute
-# food-substitute
+
 # What's that?
 it is a terminal application that allows an individual to search for healthy foods based on a category of food sought.
 
